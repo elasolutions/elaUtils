@@ -7,6 +7,6 @@ elaUtils is a set of Java utilities classes that are used by ELA solutions.  The
 
 **CloseUtil**  Provides a central place for close behavior to reduce copy & pasting.
 
-'''
+```
 CloseUtil.close(fileHandle);
-'''
+```
