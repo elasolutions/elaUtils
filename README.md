@@ -10,3 +10,12 @@ elaUtils is a set of Java utilities classes that are used by ELA solutions.  The
 ```
 CloseUtil.close(fileHandle);
 ```
+
+```
+
+**Copy** Utility for making object copies without the need for adding cloning to an object.  Copy does a deep copy.
+
+```
+final Car firstCar = new Car("Ford");
+final Car copyCar = Copy.copy(firstCar);
+```
