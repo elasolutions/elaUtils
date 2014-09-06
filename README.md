@@ -12,6 +12,7 @@ CloseUtil.close(fileHandle);
 ```
 <br/>
 **Copy** Utility for making object copies without the need for adding cloning to an object.  Copy does a deep copy.
+[Note: No need for casting]
 
 ```
 final Car firstCar = new Car("Ford");
