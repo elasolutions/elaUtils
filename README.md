@@ -31,7 +31,7 @@ String cacheName = "simple";
 long expire = 1000; // the minimum amount of time in milliseconds that the object should stay in cache
 long period = 60000; // period time in milliseconds between successive expire checks.
 
-m_store = new SimpleCache<Integer, Car>(CacheTemplateDemo.class.getName(), 4000, period);
+m_store = new SimpleCache<Integer, Car>(CacheTemplateDemo.class.getName(), expire, period);
 ....
 final Integer key = Integer.valueOf(1);
 m_store.put(key, new Car(key, "my car"));
@@ -59,8 +59,9 @@ if( car!=null) {
 } else {
 	System.out.println("No car corresponding to " + key2.toString());
 }
-<br/>
 ```
+<br/>
+
 
 **CryptoService** Wraps to encrypt/decrypt functionality.
 
@@ -79,21 +80,30 @@ Crypto encrypter = CryptoService.newUtils(passPhrase, salt, iterationCount);
 final String encrypted = encrypter.encrypt("Don't tell anybody!");
 System.out.println("encrypted=" + encrypted); 					// encrypted=wvE4cZuDblPZpKs78bVTZHroAB7ouFGh
 System.out.println("decrypted="+encrypter.decrypt(encrypted));	// decrypted=Don't tell anybody!
-```
-<b>Output</b>
-```
+
+Output:
 encrypted=wvE4cZuDblPZpKs78bVTZHroAB7ouFGh
 decrypted=Don't tell anybody!
 ```		
 
 <br/>
-**SyncWriter** - An interface and set of concreate classes that controls the writing to a file from multiple threads.
+**SyncWriter** - An interface and set of concrete classes that controls the writing from multiple threads.
+```		
+SyncCompressInMemory writer = new SyncFileWrite(new File(FilenameUtils.concat(m_path, (type.getName() + ".xml"))));
+writer.write("some text");
+...
+writer.write("some text");
+writer.close();
+```		
 
 <br/>
 **HessianProxy** - Singleton wrapper to the HessianProxyFactory.
 
 <br/>
-**ServletUtil** - Dumps the HttpServletRequest to a buffer for display, debugging or logging.
+**ServletUtil** - Dumps the entire HttpServletRequest structure, session state and cookies to a buffer for display, debugging or logging.
+```		
+StringBuffer requestDump = ServletUtil.dumpRequest(request); // request is a HttpServletRequest object
+```
 
 <br/>
 **WebClient** - A mechanism to detect client software, version and platform from a user-agent string.
