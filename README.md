@@ -34,10 +34,14 @@ assertTrue( StringDoubleUtil.getDouble("4.4",0)==4.4);
 
 ```
 String cacheName = "simple";
-long expire = 1000; // the minimum amount of time in milliseconds that the object should stay in cache
-long period = 60000; // period time in milliseconds between successive expire checks.
 
-m_store = new SimpleCache<Integer, Car>(CacheTemplateDemo.class.getName(), expire, period);
+// the minimum amount of time in milliseconds that the object should stay in cache
+long expire = 1000; 
+
+// period time in milliseconds between successive expire checks.
+long period = 60000; 
+
+m_store = new SimpleCache<Integer, Car>("Demo", expire, period);
 ....
 final Integer key = Integer.valueOf(1);
 m_store.put(key, new Car(key, "my car"));
@@ -52,7 +56,8 @@ m_store.put(key, new Car(key, "my car update"));
 car = m_store.get(key);
 System.out.println(car.m_name);
 
-try { Thread.sleep(10000); } catch (final InterruptedException excep) { }
+try { Thread.sleep(10000); } 
+catch (final InterruptedException excep) { }
 
 m_store.put(key, new Car(key, "my car update again"));
 car = m_store.get(key);
@@ -84,8 +89,8 @@ byte[] salt ={
 
 Crypto encrypter = CryptoService.newUtils(passPhrase, salt, iterationCount);
 final String encrypted = encrypter.encrypt("Don't tell anybody!");
-System.out.println("encrypted=" + encrypted); 					// encrypted=wvE4cZuDblPZpKs78bVTZHroAB7ouFGh
-System.out.println("decrypted="+encrypter.decrypt(encrypted));	// decrypted=Don't tell anybody!
+System.out.println("encrypted=" + encrypted);
+System.out.println("decrypted="+encrypter.decrypt(encrypted));
 
 Output:
 encrypted=wvE4cZuDblPZpKs78bVTZHroAB7ouFGh
@@ -107,8 +112,9 @@ writer.close();
 
 <br/>
 **ServletUtil** - Dumps the entire HttpServletRequest structure, session state and cookies to a buffer for display, debugging or logging.
-```		
-StringBuffer requestDump = ServletUtil.dumpRequest(request); // request is a HttpServletRequest object
+```
+// request is a HttpServletRequest object
+StringBuffer requestDump = ServletUtil.dumpRequest(request); 
 ```
 
 <br/>
@@ -142,7 +148,6 @@ public enum Platform {
 <br/>
 **StressTest** - Java based stress test service.  Write the stress test in Java rather than using an elaborate GUI tools.
 ```
-///////////////////////////////////////////////////////////////////////////////////////////
 // Test: This is the test that will be executed.   The action() contains the code to be executed
 final  StressAction action = new StressAction() {
 	@Override
@@ -173,7 +178,6 @@ final  StressAction action = new StressAction() {
 	}
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
 // Determine how you want the class to be executed.
 final String testName = "service call test";
 
@@ -190,7 +194,6 @@ load.setDisplayDuringExecution(true);
 load.run(testName, numberOfThreads, numberOfActionsPerThread,
 	delayBetweenActionsInMilliseconds, useRandomDelay, action);
 
-///////////////////////////////////////////////////////////////////////////////////////////
 // display results
 for (StressThead result : load.getStressThreads()) {
 	System.out.println(result.toString());
