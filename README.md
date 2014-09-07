@@ -148,8 +148,7 @@ public enum Platform {
 <br/>
 **StressTest** - Java based stress test service.  Write the stress test in Java rather than using an elaborate GUI tools.
 ```
-// Test: This is the test that will be executed.   
-// The action() contains the code to be executed
+// Test: This is the test that will be executed.   The action() contains the code to be executed
 final  StressAction action = new StressAction() {
 	@Override
 	public String action(int threadId, int count) {
@@ -204,8 +203,9 @@ for (StressThead result : load.getStressThreads()) {
 }
 System.out.println("Total runtime = " + load.getTotalRuntime());
 System.out.println("Average thread execution time= " + load.getAverageThreadTime());
-```
 <br/>
+```
+
 
 **FieldTypes** - Reusable type information in the form of a enumeration with methods.
 
