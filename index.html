@@ -27,37 +27,208 @@
         </ul>
       </header>
       <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <h1>
+<a name="elautils" class="anchor" href="#elautils"><span class="octicon octicon-link"></span></a>elaUtils</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>elaUtils is a set of Java utilities classes that are used by ela solutions.  The classes that do not fit into other third party libs have been brought into elaUtils.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p><strong>CloseUtil</strong> - Provides a central place for close behavior to reduce copy &amp; pasting.</p>
+
+<pre><code>CloseUtil.close(fileHandle);
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p><br><strong>Copy</strong> - Utility for making object copies without the need for adding cloning to an object.  Copy does a deep copy.<br>
+Note: There is no need for casting.</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<pre><code>final Car firstCar = new Car("Ford");
+final Car copyCar = Copy.copy(firstCar);
+</code></pre>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p><br></p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<p><br><strong>StringDoubleUtil</strong> - Converts Strings to doubles.</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<pre><code>assertTrue( StringDoubleUtil.isDouble("1.0"));
+assertFalse(StringDoubleUtil.isDouble("a"));
+assertTrue( StringDoubleUtil.getDouble(null,0)==0);
+assertTrue( StringDoubleUtil.getDouble("4.4",0)==4.4);
+</code></pre>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<p><br><strong>SimpleCache<i></i></strong> - An simple alternative to ehcache.</p>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<pre><code>String cacheName = "simple";
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+// the minimum amount of time in milliseconds that the object should stay in cache
+long expire = 1000; 
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+// period time in milliseconds between successive expire checks.
+long period = 60000; 
+
+m_store = new SimpleCache&lt;Integer, Car&gt;("Demo", expire, period);
+....
+final Integer key = Integer.valueOf(1);
+m_store.put(key, new Car(key, "my car"));
+
+final Integer key2 = Integer.valueOf(2);
+m_store.put(key2, new Car(key2, "van"));
+
+Car car = m_store.get(key);
+System.out.println(car.m_name);
+
+m_store.put(key, new Car(key, "my car update"));
+car = m_store.get(key);
+System.out.println(car.m_name);
+
+try { Thread.sleep(10000); } 
+catch (final InterruptedException excep) { }
+
+m_store.put(key, new Car(key, "my car update again"));
+car = m_store.get(key);
+System.out.println(car.m_name);
+
+// careful, due to timeout data may not be returned
+car = m_store.get(key2);
+if( car!=null) {
+    System.out.println(car.m_name);
+} else {
+    System.out.println("No car corresponding to " + key2.toString());
+}
+</code></pre>
+
+<p><br></p>
+
+<p><strong>CryptoService</strong> Wraps to encrypt/decrypt functionality.</p>
+
+<pre><code>int iterationCount = 19;
+
+String passPhrase = "YourPassPhrase";
+
+// 8-byte Salt
+byte[] salt ={ 
+    (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32, (byte) 0x56,
+    (byte) 0x35, (byte) 0xE3, (byte) 0x03 
+};
+
+Crypto encrypter = CryptoService.newUtils(passPhrase, salt, iterationCount);
+final String encrypted = encrypter.encrypt("Don't tell anybody!");
+System.out.println("encrypted=" + encrypted);
+System.out.println("decrypted="+encrypter.decrypt(encrypted));
+
+Output:
+encrypted=wvE4cZuDblPZpKs78bVTZHroAB7ouFGh
+decrypted=Don't tell anybody!
+</code></pre>
+
+<p><br><strong>SyncWriter</strong> - An interface and set of concrete classes that controls the writing from multiple threads.</p>
+
+<pre><code>SyncCompressInMemory writer = new SyncFileWrite(new File("path to file"));
+writer.write("some text");
+...
+writer.write("some text");
+writer.close();
+</code></pre>
+
+<p><br><strong>HessianProxy</strong> - Singleton wrapper to the HessianProxyFactory.</p>
+
+<p><br><strong>ServletUtil</strong> - Dumps the entire HttpServletRequest structure, session state and cookies to a buffer for display, debugging or logging.</p>
+
+<pre><code>// request is a HttpServletRequest object
+StringBuffer requestDump = ServletUtil.dumpRequest(request); 
+</code></pre>
+
+<p><br><strong>WebClient</strong> - A mechanism to detect client software, version and platform from a user-agent string.</p>
+
+<pre><code>// is windows?
+WebClient.isWindows(request)
+
+Platform platform =  WebClient.detect(request).getPlatform();
+
+public enum Platform {
+    MACOSX,
+    WIN95,
+    WIN98,
+    WINNT,
+    WIN2K,
+    WINXP,
+    WINVISTA,
+    WIN7,
+    WIN8,
+    WIN81,
+    LINUX,
+    IOS,
+    ANDROID,
+    JAVA_ME,
+    UNKNOWN
+}
+</code></pre>
+
+<p><br><strong>StressTest</strong> - Java based stress test service.  Write the stress test in Java rather than using an elaborate GUI tools.</p>
+
+<pre><code>// Test: This is the test that will be executed.   
+The action() contains the code to be executed
+final  StressAction action = new StressAction() {
+    @Override
+    public String action(int threadId, int count) {
+        //-----------------------------------------------
+        // The count corresponds to the number of times this method has been called.
+        // count is useful for things like logging or pull records from a list or file.
+
+        //-----------------------------------------------
+        // do something here.
+        final String statusFlag = "complete";
+
+        // The thread is to simulate activity
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException excep) {
+            excep.printStackTrace();
+        }
+
+        //-----------------------------------------------
+        // return the status or message of the test.
+        return statusFlag;
+    }
+
+    @Override
+    public void cleanup() {
+        // do some clean up here, such as closing database connections.
+    }
+};
+
+// Determine how you want the class to be executed.
+final String testName = "service call test";
+
+final int numberOfThreads = 150;
+
+final int numberOfActionsPerThread = 50;
+
+final long delayBetweenActionsInMilliseconds = 50;
+
+final boolean useRandomDelay = false;
+
+final StressTest load = StressTest.newTest();
+load.setDisplayDuringExecution(true);
+load.run(testName, numberOfThreads, numberOfActionsPerThread,
+    delayBetweenActionsInMilliseconds, useRandomDelay, action);
+
+// display results
+for (StressThead result : load.getStressThreads()) {
+    System.out.println(result.toString());
+    for( StressResults details : result.getResults() ) {
+        System.out.println("\t" + details.toString());
+    }
+}
+System.out.println("Total runtime = " + load.getTotalRuntime());
+System.out.println("Average thread execution time= " + load.getAverageThreadTime());
+</code></pre>
+
+<p><strong>FieldTypes</strong> - Reusable type information in the form of a enumeration with methods.</p>
+
+<pre><code>FieldTypes.DOUBLE
+</code></pre>
       </section>
     </div>
     <footer>
