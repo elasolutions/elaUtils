@@ -1,5 +1,9 @@
 package org.elasolutions.utils;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 
 /**
  * StringDoubleUtil provides number conversion.
@@ -95,4 +99,25 @@ public class StringDoubleUtil {
         }
         return result;
     }
+
+    public static double doubleRounded(String value, int roundingPastDecimal, RoundingMode mode) {
+        if( InternalString.isBlank(value) ) {
+            return 0.0;
+        }
+        double valueD = StringDoubleUtil.getDouble(value, 0);
+
+        // account for leading 0 as in 0.1213
+        int adjustment = 0;
+        int setPrecision = value.indexOf(".");
+        if( setPrecision==1 && value.charAt(0)=='0' && roundingPastDecimal>0 ) {
+            adjustment--;
+        } else if( setPrecision< 0 ) {
+            return valueD;
+        }
+
+        setPrecision = setPrecision + roundingPastDecimal + adjustment;
+        MathContext context = new MathContext(setPrecision,mode);
+        return new BigDecimal(valueD, context).doubleValue();
+    }
+
 }

@@ -1,7 +1,5 @@
 package org.elasolutions.utils;
 
-import java.io.IOException;
-
 import junit.framework.TestCase;
 
 
@@ -16,7 +14,7 @@ public class StringDoubleUtilTest extends TestCase {
         super.tearDown();
     }
 
-    public final void testCopy() throws IOException, ClassNotFoundException {
+    public final void testCopy() {
 
         assertTrue( StringDoubleUtil.isDouble("1.0"));
         assertFalse(StringDoubleUtil.isDouble("a"));

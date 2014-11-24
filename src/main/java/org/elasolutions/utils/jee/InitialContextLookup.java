@@ -17,6 +17,11 @@ public enum InitialContextLookup {
         return ( o!=null ) ? o.toString() : "";
     }
 
+    public Integer lookupInteger(String name) throws NamingException {
+        Object o = getInitialContext().lookup(name);
+        return ( o!=null ) ? (Integer)o : Integer.valueOf(0);
+    }
+
     public String lookupList(String path) throws NamingException {
         StringBuffer values  = new StringBuffer();
         NamingEnumeration<NameClassPair> list = getInitialContext().list(path);
