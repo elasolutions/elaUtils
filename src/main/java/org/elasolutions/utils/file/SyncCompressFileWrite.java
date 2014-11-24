@@ -1,5 +1,6 @@
 package org.elasolutions.utils.file;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,10 +20,11 @@ public class SyncCompressFileWrite implements SyncWriter {
             throw new IllegalArgumentException("Null value for file");
         }
         FileOutputStream fileStream = new FileOutputStream(file);
+        BufferedOutputStream bufferStream = new BufferedOutputStream(fileStream);
         CompressorOutputStream compress =
                 (new CompressorStreamFactory()).createCompressorOutputStream(
-                    "bzip2", fileStream);
-        return new SyncCompressFileWrite(fileStream,compress);
+                    CompressorStreamFactory.BZIP2, bufferStream);
+        return new SyncCompressFileWrite(fileStream,bufferStream,compress);
     }
 
 
@@ -30,6 +32,7 @@ public class SyncCompressFileWrite implements SyncWriter {
     public void close() throws IOException {
         flush();
         CloseUtil.close(m_compressOut);
+        CloseUtil.close(m_bufferStream);
         CloseUtil.close(m_outputStream);
     }
 
@@ -60,12 +63,15 @@ public class SyncCompressFileWrite implements SyncWriter {
         }
     }
 
-    private SyncCompressFileWrite(FileOutputStream fileStream, CompressorOutputStream compress) {
+    private SyncCompressFileWrite(FileOutputStream fileStream, BufferedOutputStream bufferStream, CompressorOutputStream compress) {
         m_outputStream = fileStream;
+        m_bufferStream = bufferStream;
         m_compressOut = compress;
     }
 
     private final ReentrantLock lock = new ReentrantLock(true);
+
+    BufferedOutputStream m_bufferStream;
 
     FileOutputStream m_outputStream;
 

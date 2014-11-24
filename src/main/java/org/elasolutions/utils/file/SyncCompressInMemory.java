@@ -12,7 +12,7 @@ import org.elasolutions.utils.InternalString;
 
 /**
  * SyncCompressInMemory allows the compression to occur in memory.
- * 
+ *
  * Use the getByteArray() to get the byte array to do something.
  *
  * @author Malcolm G. Davis
@@ -39,7 +39,7 @@ public class SyncCompressInMemory implements SyncWriter {
             throw new IllegalArgumentException("Null value for byteStream");
         }
         CompressorOutputStream compress = (new CompressorStreamFactory()).createCompressorOutputStream(
-            "bzip2", byteStream);
+            CompressorStreamFactory.BZIP2, byteStream);
         return new SyncCompressInMemory(byteStream,compress);
     }
 
