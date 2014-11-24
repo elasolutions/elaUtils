@@ -8,9 +8,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Dumps the HttpServletRequest to a buffer for display, debugging or logging.
- * 
+ *
  * @author Malcolm G. Davis
- * @version 1.0
+ * @version 1.1
  */
 public class ServletUtil {
 
@@ -27,19 +27,28 @@ public class ServletUtil {
         writeDebug(buffer, "", "Path Info", request.getPathInfo());
         writeDebug(buffer, "", "Query String", request.getQueryString());
         writeDebug(buffer, "", "Request URI", request.getRequestURI());
+        writeDebug(buffer, "", "Request URL", "" + request.getRequestURL());
+        writeDebug(buffer, "", "Requested Session Id", "" + request.getRequestedSessionId());
         writeDebug(buffer, "", "Remote Addr", request.getRemoteAddr());
         writeDebug(buffer, "", "Remote Host", request.getRemoteHost());
         writeDebug(buffer, "", "Remote User", request.getRemoteUser());
         writeDebug(buffer, "", "Remote Port", "" + request.getRemotePort());
+        writeDebug(buffer, "", "Protocol", "" + request.getProtocol());
         writeDebug(buffer, "", "Server Name", "" + request.getServerName());
         writeDebug(buffer, "", "Server Port", "" + request.getServerPort());
         writeDebug(buffer, "", "Servlet Path", "" + request.getServletPath());
+        writeDebug(buffer, "", "Schema", "" + request.getScheme());
+        writeDebug(buffer, "", "Path Translated", "" + request.getPathTranslated());
+        writeDebug(buffer, "", "isRequestedSessionIdFromCookie", ""+request.isRequestedSessionIdFromCookie());
+        writeDebug(buffer, "", "isRequestedSessionIdFromURL", ""+request.isRequestedSessionIdFromURL());
+        writeDebug(buffer, "", "isRequestedSessionIdValid", ""+request.isRequestedSessionIdValid());
+        writeDebug(buffer, "", "isSecure", ""+request.isSecure());
 
         final HttpSession session = request.getSession();
         if (session == null) {
             buffer.append("Session is null");
         } else {
-            buffer.append("Session Id: " + session.getId());
+            buffer.append("Session Id: " + session.getId() + "\r\n");
             final Enumeration<?> enumerates = session.getAttributeNames();
             while (enumerates.hasMoreElements()) {
                 final String key = (String) enumerates.nextElement();
