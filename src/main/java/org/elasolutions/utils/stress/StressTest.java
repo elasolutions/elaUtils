@@ -3,12 +3,33 @@ package org.elasolutions.utils.stress;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>StressTest class.</p>
+ *
+ * @author malcolm
+ * @version $Id: $Id
+ */
 public class StressTest {
 
+    /**
+     * <p>newTest.</p>
+     *
+     * @return a {@link org.elasolutions.utils.stress.StressTest} object.
+     */
     public static StressTest newTest() {
         return new StressTest();
     }
 
+    /**
+     * <p>run.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param numberOfThreads a int.
+     * @param numberOfActionsPerThread a int.
+     * @param delayBetweenActionsInMilliseconds a long.
+     * @param random a boolean.
+     * @param action a {@link org.elasolutions.utils.stress.StressAction} object.
+     */
     public void run(final String name, final int numberOfThreads,
             final int numberOfActionsPerThread, final long delayBetweenActionsInMilliseconds,
             final boolean random, final StressAction action) {
@@ -53,7 +74,12 @@ public class StressTest {
         m_totalRuntime = System.currentTimeMillis() - start;
     }
 
-    protected List<StressThead> getStressThreads() {
+    /**
+     * <p>getStressThreads.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
+    public List<StressThead> getStressThreads() {
         if (m_testsList == null) {
             m_testsList = new ArrayList<StressThead>();
         }
@@ -63,7 +89,7 @@ public class StressTest {
     /**
      * Display individual execution results as the stress is executing.
      * This will impact the results due to the additional load placed on the system.
-     * 
+     *
      * @param displayFlag
      * void
      */
@@ -71,14 +97,29 @@ public class StressTest {
         m_displayResultsDuringExecution = displayFlag;
     }
 
+    /**
+     * <p>printToSystemOut.</p>
+     *
+     * @return a boolean.
+     */
     public boolean printToSystemOut() {
         return m_displayResultsDuringExecution;
     }
 
+    /**
+     * <p>getTotalRuntime.</p>
+     *
+     * @return a long.
+     */
     public long getTotalRuntime() {
         return m_totalRuntime;
     }
 
+    /**
+     * <p>getAverageThreadTime.</p>
+     *
+     * @return a long.
+     */
     public long getAverageThreadTime() {
         return m_averageThreadTimes;
     }

@@ -8,6 +8,12 @@ package org.elasolutions.utils;
  */
 public class InternalString {
 
+    /**
+     * <p>isBlank.</p>
+     *
+     * @param string a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isBlank(String string) {
         if( string==null ) {
             return true;

@@ -13,8 +13,22 @@ import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import org.elasolutions.utils.CloseUtil;
 import org.elasolutions.utils.InternalString;
 
+/**
+ * <p>SyncCompressFileWrite class.</p>
+ *
+ * @author malcolm
+ * @version $Id: $Id
+ */
 public class SyncCompressFileWrite implements SyncWriter {
 
+    /**
+     * <p>newCompression.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     * @return a {@link org.elasolutions.utils.file.SyncCompressFileWrite} object.
+     * @throws org.apache.commons.compress.compressors.CompressorException if any.
+     * @throws java.io.FileNotFoundException if any.
+     */
     public static SyncCompressFileWrite newCompression(final File file) throws CompressorException, FileNotFoundException {
         if (file == null) {
             throw new IllegalArgumentException("Null value for file");
@@ -28,6 +42,7 @@ public class SyncCompressFileWrite implements SyncWriter {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public void close() throws IOException {
         flush();
@@ -36,6 +51,7 @@ public class SyncCompressFileWrite implements SyncWriter {
         CloseUtil.close(m_outputStream);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void flush() throws IOException {
         if( m_compressOut!=null ) {
@@ -43,11 +59,13 @@ public class SyncCompressFileWrite implements SyncWriter {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public byte[] getByteArray() {
         return m_outputStream.toString().getBytes();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void write(final String text) throws IOException {
         if (InternalString.isBlank(text)) {

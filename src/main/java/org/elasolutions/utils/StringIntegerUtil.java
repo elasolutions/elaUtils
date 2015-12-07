@@ -14,7 +14,7 @@ public class StringIntegerUtil {
      * Checks to see of a value is numeric or double.
      * StringUtils.isNumericSpace() does not allow '.', this method does.
      *
-     * @param text
+     * @param text a {@link java.lang.String} object.
      * @return boolean
      */
     public static boolean isInteger(final String text) {
@@ -31,6 +31,13 @@ public class StringIntegerUtil {
         return true;
     }
 
+    /**
+     * <p>getInteger.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     * @param errorValue a int.
+     * @return a int.
+     */
     public static int getInteger(final String text, final int errorValue) {
         if (text == null) {
             return errorValue;
@@ -48,6 +55,13 @@ public class StringIntegerUtil {
         return result;
     }
 
+    /**
+     * <p>getIntegerObject.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     * @param errorValue a int.
+     * @return a {@link java.lang.Integer} object.
+     */
     public static Integer getIntegerObject(final String text, final int errorValue) {
         if( !isInteger(text) ) {
             return Integer.valueOf(errorValue);

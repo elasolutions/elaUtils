@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * Utility for making object copies without the need for adding cloning to an object.<br/><br/>
+ * Utility for making object copies without the need for adding cloning to an object.<br><br>
  *
  * <b>Notes:</b>
  * <ul>
@@ -18,14 +18,20 @@ import java.io.ObjectOutputStream;
  * <li>See cloning library <a href='https://code.google.com/p/cloning/'>https://code.google.com/p/cloning/</a>
  *  to clone ANY Java object.</li>
  * </ul>
+ *
+ * @author malcolm
+ * @version $Id: $Id
  */
 public class Copy {
 
     /**
      * Returns a copy of the object.
      *
-     * @throws IOException if the object, or some child object, is not marked Serializable
-     * @throws ClassNotFoundException if the object is not visible for some reason.
+     * @throws java.io.IOException if the object, or some child object, is not marked Serializable
+     * @throws java.lang.ClassNotFoundException if the object is not visible for some reason.
+     * @param toCopy a {@link java.lang.Object} object.
+     * @param <T> a T object.
+     * @return a T object.
      */
     @SuppressWarnings("unchecked")
     public static <T> T copy( final Object toCopy)throws IOException, ClassNotFoundException {

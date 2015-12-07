@@ -1,5 +1,11 @@
 package org.elasolutions.utils.jee;
 
+/**
+ * <p>Platform class.</p>
+ *
+ * @author malcolm g. davis
+ * @version $Id: $Id
+ */
 public enum Platform {
     MACOSX,
     WIN95,

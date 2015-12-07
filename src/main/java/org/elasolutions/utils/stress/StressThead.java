@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-class StressThead extends Thread {
+public class StressThead extends Thread {
 
     StressThead(final String name, final int threadId, final int count, final long millisDelay,
         final boolean randomDelay, final StressAction runAction) {
@@ -16,6 +16,7 @@ class StressThead extends Thread {
         m_runAction = runAction;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void run() {
         m_startTime = System.currentTimeMillis();
@@ -56,7 +57,12 @@ class StressThead extends Thread {
         }
     }
 
-    protected List<StressResults> getResults() {
+    /**
+     * <p>getResults.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
+    public List<StressResults> getResults() {
         if (m_results == null) {
             m_results = new ArrayList<StressResults>();
 
@@ -64,26 +70,50 @@ class StressThead extends Thread {
         return m_results;
     }
 
+    /**
+     * <p>setPrintToSystemOut.</p>
+     *
+     * @param printToSystemOut a boolean.
+     */
     public void setPrintToSystemOut(boolean printToSystemOut) {
         m_printToSystemOut = printToSystemOut;
     }
 
+    /**
+     * <p>printToSystemOut.</p>
+     *
+     * @return a boolean.
+     */
     public boolean printToSystemOut() {
         return m_printToSystemOut;
     }
 
+    /**
+     * <p>cleanup.</p>
+     */
     public void cleanup() {
         m_runAction.cleanup();
     }
 
+    /**
+     * <p>getTotalRuntime.</p>
+     *
+     * @return a long.
+     */
     public long getTotalRuntime() {
         return m_totalRuntime;
     }
 
+    /**
+     * <p>averageRuntime.</p>
+     *
+     * @return a long.
+     */
     public long averageRuntime() {
         return m_totalRuntime / m_maxCount;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "Thread=" + m_threadId + ",  average.runtime= " + averageRuntime();

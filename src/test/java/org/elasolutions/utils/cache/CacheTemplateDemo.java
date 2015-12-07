@@ -39,24 +39,32 @@ public class CacheTemplateDemo implements SimpleCacheCallback<Integer, Car> {
     class TestThread extends Thread {
         @Override
         public void run() {
-            final Integer key = Integer.valueOf(1);
-            m_store.put(key, new Car(key, "my car"));
+            final Integer keyOne = Integer.valueOf(1);
+            m_store.put(keyOne, new Car(keyOne, "my car"));
 
             final Integer key2 = Integer.valueOf(2);
             m_store.put(key2, new Car(key2, "van"));
 
-            Car car = m_store.get(key);
+            Car car = m_store.get(keyOne);
             System.out.println(car.m_name);
 
-            m_store.put(key, new Car(key, "my car update"));
-            car = m_store.get(key);
+            m_store.put(keyOne, new Car(keyOne, "my car update"));
+            car = m_store.get(keyOne);
+            System.out.println(car.m_name);
+
+            try { Thread.sleep(3000); } catch (final InterruptedException excep) { }
+
+            m_store.put(keyOne, new Car(keyOne, "my car update again"));
+            car = m_store.get(keyOne);
+            System.out.println(car.m_name);
+
+            try { Thread.sleep(3000); } catch (final InterruptedException excep) { }
+
+            m_store.put(keyOne, new Car(keyOne, "my car update again"));
+            car = m_store.get(keyOne);
             System.out.println(car.m_name);
 
             try { Thread.sleep(10000); } catch (final InterruptedException excep) { }
-
-            m_store.put(key, new Car(key, "my car update again"));
-            car = m_store.get(key);
-            System.out.println(car.m_name);
 
             // careful, due to timeout, data
             car = m_store.get(key2);
@@ -71,6 +79,6 @@ public class CacheTemplateDemo implements SimpleCacheCallback<Integer, Car> {
 
     @Override
     public void removedElement(Element element) {
-        System.out.println("element removed: " + element.getKey().toString() + "=" + element.getObjectValue().toString());
+        System.out.println("element removed: " + element.getKey().toString() + ": " + element.getObjectValue().toString());
     }
 }

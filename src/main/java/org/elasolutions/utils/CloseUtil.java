@@ -9,13 +9,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Provides a central place for close behavior to reduce copy & pasting.
+ * Provides a central place for close behavior to reduce copy &amp; pasting.
  *
  * @author Malcolm G. Davis
  * @version 1.0
  */
 public class CloseUtil {
 
+    /**
+     * <p>close.</p>
+     *
+     * @param close a {@link java.io.Closeable} object.
+     */
     public static void close(final Closeable close) {
         if (close != null) {
             try {
@@ -27,6 +32,11 @@ public class CloseUtil {
         }
     }
 
+    /**
+     * <p>close.</p>
+     *
+     * @param rs a {@link java.sql.ResultSet} object.
+     */
     public static void close(final ResultSet rs) {
         if (rs != null) {
             try {
@@ -38,6 +48,11 @@ public class CloseUtil {
         }
     }
 
+    /**
+     * <p>close.</p>
+     *
+     * @param statement a {@link java.sql.Statement} object.
+     */
     public static void close(final Statement statement) {
         if (statement != null) {
             try {
@@ -49,6 +64,11 @@ public class CloseUtil {
         }
     }
 
+    /**
+     * <p>close.</p>
+     *
+     * @param close a {@link java.sql.PreparedStatement} object.
+     */
     public static void close(final PreparedStatement close) {
         if (close != null) {
             try {

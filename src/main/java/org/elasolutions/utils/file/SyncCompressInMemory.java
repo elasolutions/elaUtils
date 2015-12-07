@@ -22,9 +22,10 @@ public class SyncCompressInMemory implements SyncWriter {
 
     /**
      * Creates the default compression bytestream
-     * @return
-     * @throws CompressorException
+     *
+     * @throws org.apache.commons.compress.compressors.CompressorException
      * SyncCompressInMemory
+     * @return a {@link org.elasolutions.utils.file.SyncCompressInMemory} object.
      */
     public static SyncCompressInMemory newCompression() throws CompressorException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -34,6 +35,13 @@ public class SyncCompressInMemory implements SyncWriter {
     }
 
 
+    /**
+     * <p>newCompression.</p>
+     *
+     * @param byteStream a {@link java.io.ByteArrayOutputStream} object.
+     * @return a {@link org.elasolutions.utils.file.SyncCompressInMemory} object.
+     * @throws org.apache.commons.compress.compressors.CompressorException if any.
+     */
     public static SyncCompressInMemory newCompression(final ByteArrayOutputStream byteStream) throws CompressorException {
         if (byteStream == null) {
             throw new IllegalArgumentException("Null value for byteStream");
@@ -43,6 +51,7 @@ public class SyncCompressInMemory implements SyncWriter {
         return new SyncCompressInMemory(byteStream,compress);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void close() throws IOException {
         flush();
@@ -51,6 +60,7 @@ public class SyncCompressInMemory implements SyncWriter {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public void flush() throws IOException {
         if( m_compressOut!=null ) {
@@ -58,11 +68,13 @@ public class SyncCompressInMemory implements SyncWriter {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public byte[] getByteArray() {
         return m_byteStream.toByteArray();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void write(final String text) throws IOException {
         if (InternalString.isBlank(text)) {

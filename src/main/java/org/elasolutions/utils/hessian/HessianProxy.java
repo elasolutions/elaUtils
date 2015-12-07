@@ -15,6 +15,14 @@ import com.caucho.hessian.client.HessianProxyFactory;
 public enum HessianProxy {
     INSTANCE;
 
+    /**
+     * <p>create.</p>
+     *
+     * @param api a {@link java.lang.Class} object.
+     * @param service a {@link java.lang.String} object.
+     * @return a {@link java.lang.Object} object.
+     * @throws java.net.MalformedURLException if any.
+     */
     public Object create(final Class api, final String service) throws MalformedURLException {
         if( InternalString.isBlank(m_uri) ) {
             throw new IllegalStateException("URI must be set prior to using Hessian proxy");
@@ -22,6 +30,11 @@ public enum HessianProxy {
         return getHessianProxyFactory().create(api, m_uri + service);
     }
 
+    /**
+     * <p>setURI.</p>
+     *
+     * @param uri a {@link java.lang.String} object.
+     */
     public void setURI(final String uri) {
         m_uri = uri;
         if( !m_uri.endsWith("/") ) {
@@ -29,6 +42,11 @@ public enum HessianProxy {
         }
     }
 
+    /**
+     * <p>getURI.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getURI() {
         return m_uri;
     }

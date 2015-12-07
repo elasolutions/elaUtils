@@ -26,11 +26,25 @@ import javax.crypto.spec.PBEParameterSpec;
  *   <li>Do not use for passwords stored in a database.  1-way hash should be used for database passwords.</li>
  *   <li>For increased security, store the parameters passPhrase, salt and iterationCount on another system than were this is being used.</li>
  * </ul>
+ *
  * @author Malcolm G. Davis
  * @version 1.0
  */
 public class CryptoService implements Crypto  {
 
+    /**
+     * <p>newUtils.</p>
+     *
+     * @param passPhrase a {@link java.lang.String} object.
+     * @param salt an array of byte.
+     * @param iterationCount a int.
+     * @return a {@link org.elasolutions.utils.encrypt.Crypto} object.
+     * @throws java.security.spec.InvalidKeySpecException if any.
+     * @throws java.security.NoSuchAlgorithmException if any.
+     * @throws javax.crypto.NoSuchPaddingException if any.
+     * @throws java.security.InvalidKeyException if any.
+     * @throws java.security.InvalidAlgorithmParameterException if any.
+     */
     public static Crypto newUtils(String passPhrase, byte[] salt, int iterationCount) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         final KeySpec keySpec =
                 new PBEKeySpec(passPhrase.toCharArray(), salt, iterationCount);
@@ -52,6 +66,7 @@ public class CryptoService implements Crypto  {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public String decrypt(final String str) throws IOException, IllegalBlockSizeException, BadPaddingException {
         // Decode base64 to get bytes
@@ -70,6 +85,7 @@ public class CryptoService implements Crypto  {
         return new String(utf8, "UTF8");
     }
 
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("restriction")
     public String encrypt(final String str) throws UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
@@ -88,6 +104,15 @@ public class CryptoService implements Crypto  {
         return new sun.misc.BASE64Encoder().encode(enc);
     }
 
+    /**
+     * <p>Constructor for CryptoService.</p>
+     *
+     * @param passPhrase a {@link java.lang.String} object.
+     * @param salt an array of byte.
+     * @param iterationCount a int.
+     * @param ecipher a {@link javax.crypto.Cipher} object.
+     * @param dcipher a {@link javax.crypto.Cipher} object.
+     */
     public CryptoService(String passPhrase, byte[] salt, int iterationCount, Cipher ecipher, Cipher dcipher) {
         m_passPhrase = passPhrase;
         m_salt = salt;

@@ -11,12 +11,18 @@ import java.util.logging.Logger;
 
 /**
  * SyncFileWrite controls the writing to a file from multiple threads.
- * 
+ *
  * @author Malcolm G. Davis
  * @version 1.0
  */
 public class SyncFileWrite implements SyncWriter {
 
+    /**
+     * <p>Constructor for SyncFileWrite.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     * @throws java.lang.Exception if any.
+     */
     public SyncFileWrite(final File file) throws Exception {
         try {
             out = new BufferedWriter(new FileWriter(file, true));
@@ -26,6 +32,7 @@ public class SyncFileWrite implements SyncWriter {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void close() {
         try {
@@ -36,12 +43,15 @@ public class SyncFileWrite implements SyncWriter {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public byte[] getByteArray() {
         return null;
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Optional flush command.  Flush will occur on close.
      */
     @Override
@@ -53,6 +63,7 @@ public class SyncFileWrite implements SyncWriter {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void write(final String text) {
         if (text==null || text.trim().length()==0 ) {

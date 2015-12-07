@@ -1,5 +1,11 @@
 package org.elasolutions.utils.jee;
 
+/**
+ * <p>UserAgent class.</p>
+ *
+ * @author malcolm
+ * @version $Id: $Id
+ */
 public enum UserAgent {
     IE,
     FIREFOX,

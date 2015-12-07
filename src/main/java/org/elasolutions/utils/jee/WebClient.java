@@ -10,15 +10,39 @@ import javax.servlet.http.HttpServletRequest;
  *
  * To start extending the information, look at the following resources.
  *
- * @see http://www.hand-interactive.com/resources/detect-mobile-java.htm
- * @see http://wiki.drupalschool.net/index.php/Use_Java_to_Detect_Mobile_Devices
- * @see https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java
- * @see http://www.java2s.com/Code/Java/Servlets/Browserdetection.htm
- * @see http://wurfl.sourceforge.net/
+ * @see <a href="http://www.hand-interactive.com/resources/detect-mobile-java.htm">http://www.hand-interactive.com/resources/detect-mobile-java.htm</a>
+ * @see <a href="http://wiki.drupalschool.net/index.php/Use_Java_to_Detect_Mobile_Devices">http://wiki.drupalschool.net/index.php/Use_Java_to_Detect_Mobile_Devices</a>
+ * @see <a href="https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java">https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java</a>
+ * @see <a href="http://www.java2s.com/Code/Java/Servlets/Browserdetection.htm">http://www.java2s.com/Code/Java/Servlets/Browserdetection.htm</a>
+ * @see <a href="http://wurfl.sourceforge.net/">http://wurfl.sourceforge.net/</a>
+ * @see <a href="http://www.hand-interactive.com/resources/detect-mobile-java.htm">http://www.hand-interactive.com/resources/detect-mobile-java.htm</a>
+ * @see <a href="http://wiki.drupalschool.net/index.php/Use_Java_to_Detect_Mobile_Devices">http://wiki.drupalschool.net/index.php/Use_Java_to_Detect_Mobile_Devices</a>
+ * @see <a href="https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java">https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java</a>
+ * @see <a href="http://www.java2s.com/Code/Java/Servlets/Browserdetection.htm">http://www.java2s.com/Code/Java/Servlets/Browserdetection.htm</a>
+ * @see <a href="http://wurfl.sourceforge.net/">http://wurfl.sourceforge.net/</a>
+ * @see <a href="https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java">https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java</a>
+ * @see <a href="http://www.hand-interactive.com/resources/detect-mobile-java.htm">http://www.hand-interactive.com/resources/detect-mobile-java.htm</a>
+ * @see <a href="http://wiki.drupalschool.net/index.php/Use_Java_to_Detect_Mobile_Devices">http://wiki.drupalschool.net/index.php/Use_Java_to_Detect_Mobile_Devices</a>
+ * @see <a href="https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java">https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java</a>
+ * @see <a href="http://www.java2s.com/Code/Java/Servlets/Browserdetection.htm">http://www.java2s.com/Code/Java/Servlets/Browserdetection.htm</a>
+ * @see <a href="http://wurfl.sourceforge.net/">http://wurfl.sourceforge.net/</a>
+ * @see <a href="http://www.hand-interactive.com/resources/detect-mobile-java.htm">http://www.hand-interactive.com/resources/detect-mobile-java.htm</a>
+ * @see <a href="http://wiki.drupalschool.net/index.php/Use_Java_to_Detect_Mobile_Devices">http://wiki.drupalschool.net/index.php/Use_Java_to_Detect_Mobile_Devices</a>
+ * @see <a href="https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java">https://code.google.com/p/mobileesp/source/browse/Java/UAgentInfo.java</a>
+ * @see <a href="http://www.java2s.com/Code/Java/Servlets/Browserdetection.htm">http://www.java2s.com/Code/Java/Servlets/Browserdetection.htm</a>
+ * @see <a href="http://wurfl.sourceforge.net/">http://wurfl.sourceforge.net/</a>
  *
+ * @author malcolm
+ * @version $Id: $Id
  */
 public class WebClient implements Serializable {
 
+    /**
+     * <p>isWindows.</p>
+     *
+     * @param request a {@link javax.servlet.http.HttpServletRequest} object.
+     * @return a boolean.
+     */
     public static boolean isWindows(final HttpServletRequest request) {
         WebClient client = detect(request);
 
@@ -50,10 +74,22 @@ public class WebClient implements Serializable {
         return isWindows;
     }
 
+    /**
+     * <p>detect.</p>
+     *
+     * @param request a {@link javax.servlet.http.HttpServletRequest} object.
+     * @return a {@link org.elasolutions.utils.jee.WebClient} object.
+     */
     public static WebClient detect(final HttpServletRequest request) {
         return detect(request.getHeader("User-Agent"));
     }
 
+    /**
+     * <p>detect.</p>
+     *
+     * @param userAgentString a {@link java.lang.String} object.
+     * @return a {@link org.elasolutions.utils.jee.WebClient} object.
+     */
     public static WebClient detect(final String userAgentString) {
         UserAgent ua = UserAgent.UNKNOWN;
         int version = 0;
@@ -120,6 +156,14 @@ public class WebClient implements Serializable {
         return new WebClient(ua, version, ver, platform);
     }
 
+    /**
+     * <p>Constructor for WebClient.</p>
+     *
+     * @param userAgent a {@link org.elasolutions.utils.jee.UserAgent} object.
+     * @param majorVersion a int.
+     * @param fullVersion a {@link java.lang.String} object.
+     * @param platform a {@link org.elasolutions.utils.jee.Platform} object.
+     */
     public WebClient(final UserAgent userAgent, final int majorVersion, final String fullVersion, final Platform platform) {
         this.m_userAgent = userAgent;
         this.m_majorVersion = majorVersion;
@@ -127,22 +171,43 @@ public class WebClient implements Serializable {
         this.m_platform = platform;
     }
 
+    /**
+     * <p>getPlatform.</p>
+     *
+     * @return a {@link org.elasolutions.utils.jee.Platform} object.
+     */
     public Platform getPlatform() {
         return m_platform;
     }
 
+    /**
+     * <p>getFullVersion.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getFullVersion() {
         return m_fullVersion;
     }
 
+    /**
+     * <p>getMajorVersion.</p>
+     *
+     * @return a int.
+     */
     public int getMajorVersion() {
         return m_majorVersion;
     }
 
+    /**
+     * <p>getUserAgent.</p>
+     *
+     * @return a {@link org.elasolutions.utils.jee.UserAgent} object.
+     */
     public UserAgent getUserAgent() {
         return m_userAgent;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(final Object obj) {
         if (obj == null) {
@@ -167,6 +232,7 @@ public class WebClient implements Serializable {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -214,10 +280,20 @@ public class WebClient implements Serializable {
         return (returnMhtml ? mhtml : dataUri);
     }
 
+    /**
+     * <p>supportsDataUris.</p>
+     *
+     * @return a boolean.
+     */
     public boolean supportsDataUris() {
         return checkInlineSupport(false);
     }
 
+    /**
+     * <p>supportsMHTML.</p>
+     *
+     * @return a boolean.
+     */
     public boolean supportsMHTML() {
         return checkInlineSupport(true);
     }
@@ -258,6 +334,7 @@ public class WebClient implements Serializable {
 
 
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return m_userAgent+" "+m_fullVersion+" / "+m_platform;

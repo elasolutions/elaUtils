@@ -14,6 +14,12 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletUtil {
 
+    /**
+     * <p>dumpRequest.</p>
+     *
+     * @param request a {@link javax.servlet.http.HttpServletRequest} object.
+     * @return a {@link java.lang.StringBuffer} object.
+     */
     public static StringBuffer dumpRequest(final HttpServletRequest request) {
         final StringBuffer buffer = new StringBuffer();
         writeDebugEnums(request, buffer, MessageCategory.Attribute, request.getAttributeNames());

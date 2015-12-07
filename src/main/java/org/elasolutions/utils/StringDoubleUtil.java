@@ -17,7 +17,7 @@ public class StringDoubleUtil {
      * Checks to see of a value is numeric or double.
      * StringUtils.isNumericSpace() does not allow '.', this method does.
      *
-     * @param text
+     * @param text a {@link java.lang.String} object.
      * @return boolean
      */
     public static boolean isDouble(final String text) {
@@ -25,19 +25,21 @@ public class StringDoubleUtil {
             return false;
         }
 
+        String trimmed = text.trim();
+
         boolean doubleDigit = false;
-        int sz = text.length();
+        int sz = trimmed.length();
         for (int i = 0; i < sz; i++) {
-            if ((Character.isDigit(text.charAt(i)) == false)
-                    && (text.charAt(i) != '.')) {
-                if( i==0 && (text.charAt(i) == '-')) {
+            if ((Character.isDigit(trimmed.charAt(i)) == false)
+                    && (trimmed.charAt(i) != '.')) {
+                if( i==0 && (trimmed.charAt(i) == '-')) {
                     continue ;
                 }
                 return false;
             }
 
             // don't allow 2 '.'
-            if ((text.charAt(i) == '.')) {
+            if ((trimmed.charAt(i) == '.')) {
                 if(doubleDigit) {
                     return false;
                 }
@@ -47,6 +49,12 @@ public class StringDoubleUtil {
         return true;
     }
 
+    /**
+     * <p>unescapeCsvDouble.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String unescapeCsvDouble(final String text) {
         if (InternalString.isBlank(text)) {
             return "";
@@ -67,6 +75,13 @@ public class StringDoubleUtil {
         return newString.toString();
     }
 
+    /**
+     * <p>getDouble.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     * @param errorDouble a double.
+     * @return a double.
+     */
     public static double getDouble(final String text, final double errorDouble) {
         if (text == null) {
             return errorDouble;
@@ -84,6 +99,13 @@ public class StringDoubleUtil {
         return result;
     }
 
+    /**
+     * <p>getDoubleObj.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     * @param errorDouble a double.
+     * @return a {@link java.lang.Double} object.
+     */
     public static Double getDoubleObj(final String text, final double errorDouble) {
         if( !isDouble(text) ) {
             return Double.valueOf(errorDouble);
@@ -100,11 +122,16 @@ public class StringDoubleUtil {
         return result;
     }
 
+    /**
+     * <p>doubleRounded.</p>
+     *
+     * @param value a {@link java.lang.String} object.
+     * @param roundingPastDecimal a int.
+     * @param mode a {@link java.math.RoundingMode} object.
+     * @return a double.
+     */
     public static double doubleRounded(String value, int roundingPastDecimal, RoundingMode mode) {
-        if( InternalString.isBlank(value) ) {
-            return 0.0;
-        }
-        double valueD = StringDoubleUtil.getDouble(value, 0);
+        double valueD = StringDoubleUtil.getDouble(value, 0.0);
 
         // account for leading 0 as in 0.1213
         int adjustment = 0;

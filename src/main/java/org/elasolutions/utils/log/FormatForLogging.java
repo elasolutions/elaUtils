@@ -25,9 +25,8 @@ public class FormatForLogging {
     /**
      * Formats a map for logging.
      *
-     * @param map
-     * @return
-     * String
+     * @param map a {@link java.util.Map} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String formatMap(Map<String, Object> map) {
         StringBuilder str = new StringBuilder();
@@ -38,7 +37,7 @@ public class FormatForLogging {
     /**
      * Formats a map for logging and appending it to a StringBuilder.
      *
-     * @param map
+     * @param map a {@link java.util.Map} object.
      * @param str
      * void
      */
@@ -61,10 +60,10 @@ public class FormatForLogging {
     /**
      * Formats XML document for logging by flattening out the XML structure.
      *
-     * @param xml
-     * @return
-     * @throws XMLStreamException
+     * @param xml a {@link java.lang.String} object.
+     * @throws javax.xml.stream.XMLStreamException
      * String
+     * @return a {@link java.lang.String} object.
      */
     public static String formatXml(String xml) throws XMLStreamException {
         if (xml == null) {
@@ -86,10 +85,10 @@ public class FormatForLogging {
     /**
      * Formats XML document for logging by flattening out the XML structure and appending it to a StringBuilder.
      *
-     * @param xml
-     * @param output
-     * @throws FactoryConfigurationError
-     * @throws XMLStreamException
+     * @param xml a {@link java.lang.String} object.
+     * @param output a {@link java.lang.StringBuilder} object.
+     * @throws javax.xml.stream.FactoryConfigurationError if any.
+     * @throws javax.xml.stream.XMLStreamException
      * void
      */
     public static void formatXmlAppendToBuilder(String xml,

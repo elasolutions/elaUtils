@@ -10,6 +10,9 @@ import org.elasolutions.utils.StringDoubleUtil;
 
 /**
  * Reusable type information in the form of a enumeration with methods
+ *
+ * @author malcolm
+ * @version $Id: $Id
  */
 public enum FieldTypes {
 
@@ -44,9 +47,21 @@ public enum FieldTypes {
 
     LIST("LIST", "[]", "LIST", List.class, new ArrayList<String>(), "List"),
 
-    ANY("ANY", "", "Any", String.class, "", "Text");
+    ANY("ANY", "", "Any", String.class, "", "Text"),
+
+    COMPLEX("COMPLEX", "w", "Complex", Object.class, "", "Complex");
 
 
+    /**
+     * <p>Constructor for FieldTypes.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param sample a {@link java.lang.String} object.
+     * @param xmlSource a {@link java.lang.String} object.
+     * @param classType a {@link java.lang.Class} object.
+     * @param defaultNullType a {@link java.lang.Object} object.
+     * @param uiLabel a {@link java.lang.String} object.
+     */
     FieldTypes(final String name, final String sample,
         final String xmlSource, final Class<?> classType,
         final Object defaultNullType, final String uiLabel) {
@@ -60,6 +75,12 @@ public enum FieldTypes {
     }
 
 
+    /**
+     * <p>getType.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @return a {@link org.elasolutions.utils.types.FieldTypes} object.
+     */
     public static FieldTypes getType(final String type) {
         if(type==null) {
             return null;
@@ -74,6 +95,14 @@ public enum FieldTypes {
     }
 
 
+    /**
+     * <p>converStringToClassType.</p>
+     *
+     * @param type a {@link org.elasolutions.utils.types.FieldTypes} object.
+     * @param value a {@link java.lang.String} object.
+     * @return a {@link java.lang.Object} object.
+     * @throws java.lang.Exception if any.
+     */
     public Object converStringToClassType(FieldTypes type, final String value) throws Exception {
         switch(type) {
             case DATETIME:
@@ -112,6 +141,12 @@ public enum FieldTypes {
     }
 
 
+    /**
+     * <p>getTypeFromClass.</p>
+     *
+     * @param classType a {@link java.lang.Class} object.
+     * @return a {@link org.elasolutions.utils.types.FieldTypes} object.
+     */
     public static FieldTypes getTypeFromClass(final Class<?> classType) {
         if(classType==null) {
             return null;
@@ -131,6 +166,12 @@ public enum FieldTypes {
     }
 
 
+    /**
+     * <p>getTypeFromExpressionString.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @return a {@link org.elasolutions.utils.types.FieldTypes} object.
+     */
     public static FieldTypes getTypeFromExpressionString(final String type) {
         if( "Currency".equals(type) ) {
             return MONEY;
@@ -149,6 +190,11 @@ public enum FieldTypes {
     }
 
 
+    /**
+     * <p>isNumeric.</p>
+     *
+     * @return a boolean.
+     */
     @SuppressWarnings("incomplete-switch")
     public boolean isNumeric() {
         switch(this) {
@@ -164,6 +210,11 @@ public enum FieldTypes {
         return false;
     }
 
+    /**
+     * <p>isDate.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isDate() {
         if( DATETIME.equals(this) || TIMESTAMP.equals(this) ) {
             return true;
@@ -171,6 +222,12 @@ public enum FieldTypes {
         return false;
     }
 
+    /**
+     * <p>isNumeric.</p>
+     *
+     * @param type a {@link java.lang.Class} object.
+     * @return a boolean.
+     */
     public static boolean isNumeric(final Class<?> type) {
         if( type.equals(java.lang.Number.class)
                 || type.equals(java.lang.Double.class)
@@ -182,6 +239,12 @@ public enum FieldTypes {
         return false;
     }
 
+    /**
+     * <p>isNumeric.</p>
+     *
+     * @param type a {@link org.elasolutions.utils.types.FieldTypes} object.
+     * @return a boolean.
+     */
     public static boolean isNumeric(final FieldTypes type) {
         if(  DOUBLE.equals(type)
                 || DURATION.equals(type)
@@ -195,19 +258,36 @@ public enum FieldTypes {
         return false;
     }
 
+    /**
+     * <p>getSample.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSample() {
         return m_sample;
     }
 
+    /**
+     * <p>getName.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getName() {
         return m_name;
     }
 
+    /**
+     * <p>getClassType.</p>
+     *
+     * @return a {@link java.lang.Class} object.
+     */
     public Class<?> getClassType() {
         return m_classType;
     }
 
     /**
+     * <p>getDataSourceType.</p>
+     *
      * @return String representing the XML datatype
      */
     public String getDataSourceType() {
@@ -215,19 +295,27 @@ public enum FieldTypes {
     }
 
     /**
+     * <p>getDefaultNullData.</p>
+     *
      * @return The default value for a null object.
      */
     public Object getDefaultNullData() {
         return m_defaultNullType;
     }
 
+    /**
+     * <p>getUiLabel.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getUiLabel() {
         return m_uiLabel;
     }
 
     /**
+     * {@inheritDoc}
+     *
      * (non-Javadoc) @see java.lang.Object#toString()
-     * @return string representation of the object
      */
     @Override
     public String toString() {

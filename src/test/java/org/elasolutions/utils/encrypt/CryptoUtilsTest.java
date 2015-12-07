@@ -1,6 +1,7 @@
 package org.elasolutions.utils.encrypt;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -36,6 +37,7 @@ public class CryptoUtilsTest  extends TestCase {
 
 
         Crypto encrypter;
+
         try {
             encrypter = CryptoService.newUtils(passPhrase, salt, iterationCount);
             String COMPARE = "Don't tell anybody!";
@@ -44,10 +46,23 @@ public class CryptoUtilsTest  extends TestCase {
 
             assertEquals(COMPARE,encrypter.decrypt(encrypted));
 
-        } catch (InvalidKeyException | InvalidKeySpecException
-                | NoSuchAlgorithmException | NoSuchPaddingException
-                | IllegalBlockSizeException | BadPaddingException
-                | InvalidAlgorithmParameterException | IOException excep) {
+        } catch (InvalidKeyException excep) {
+            assertTrue(false);
+        } catch (InvalidKeySpecException excep) {
+            assertTrue(false);
+        } catch (NoSuchAlgorithmException excep) {
+            assertTrue(false);
+        } catch (NoSuchPaddingException excep) {
+            assertTrue(false);
+        } catch (InvalidAlgorithmParameterException excep) {
+            assertTrue(false);
+        } catch (UnsupportedEncodingException excep) {
+            assertTrue(false);
+        } catch (IllegalBlockSizeException excep) {
+            assertTrue(false);
+        } catch (BadPaddingException excep) {
+            assertTrue(false);
+        } catch (IOException excep) {
             assertTrue(false);
         }
 

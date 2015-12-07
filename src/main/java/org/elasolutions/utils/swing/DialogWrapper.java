@@ -33,20 +33,53 @@ import sun.awt.AppContext;
 @SuppressWarnings("restriction")
 public class DialogWrapper extends JComponent implements Accessible {
 
+    /**
+     * <p>newComponent.</p>
+     *
+     * @param panel a {@link javax.swing.JPanel} object.
+     * @return a {@link org.elasolutions.utils.swing.DialogWrapper} object.
+     */
     public static DialogWrapper newComponent(final JPanel panel) {
         return new DialogWrapper(panel);
     }
 
+    /**
+     * <p>createDialog.</p>
+     *
+     * @param parentComponent a {@link java.awt.Component} object.
+     * @param title a {@link java.lang.String} object.
+     * @return a {@link javax.swing.JDialog} object.
+     * @throws java.awt.HeadlessException if any.
+     */
     public JDialog createDialog(final Component parentComponent,
             final String title) throws HeadlessException {
         return createDialog(parentComponent, title, JRootPane.PLAIN_DIALOG);
     }
 
+    /**
+     * <p>createDialog.</p>
+     *
+     * @param parentComponent a {@link java.awt.Component} object.
+     * @param title a {@link java.lang.String} object.
+     * @param style a int.
+     * @return a {@link javax.swing.JDialog} object.
+     * @throws java.awt.HeadlessException if any.
+     */
     public JDialog createDialog(final Component parentComponent,
             final String title, final int style) throws HeadlessException {
         return createDialog(parentComponent, title, style, true);
     }
 
+    /**
+     * <p>createDialog.</p>
+     *
+     * @param parentComponent a {@link java.awt.Component} object.
+     * @param title a {@link java.lang.String} object.
+     * @param style a int.
+     * @param border a boolean.
+     * @return a {@link javax.swing.JDialog} object.
+     * @throws java.awt.HeadlessException if any.
+     */
     public JDialog createDialog(final Component parentComponent,
             final String title, final int style, final boolean border) throws HeadlessException {
 
@@ -68,13 +101,10 @@ public class DialogWrapper extends JComponent implements Accessible {
 
 
     /**
-     * Sets the value the user has chosen.
+     * Sets the value the user has chosen. <br>
+     * beaninfo preferred: true bound: true description: The option pane's value object.
      *
      * @param newValue the chosen value
-     *
-     * @see #getValue
-     * @beaninfo preferred: true bound: true description: The option pane's
-     *           value object.
      */
     public void setValue(final Object newValue) {
         final Object oldValue = value;

@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
- * An alternative to net.sf.ehcache.  I personally have had operational issues with net.sf.ehcache in some environments.<br/><br/>
+ * An alternative to net.sf.ehcache.  I personally have had operational issues with net.sf.ehcache in some environments.<br><br>
  *
  * There are optional constructor parameters for listening to changes or adjusting time.
  * The pooling timer for the cache can also be adjusted.
@@ -32,12 +32,19 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SimpleCache<I, T> {
 
+    /**
+     * <p>Constructor for SimpleCache.</p>
+     *
+     * @param uniqueCacheName a {@link java.lang.String} object.
+     */
     public SimpleCache(final String uniqueCacheName) {
         this(uniqueCacheName, DEFAULT_TIMEOUT, null);
     }
 
     /**
-     * @param uniqueCacheName
+     * <p>Constructor for SimpleCache.</p>
+     *
+     * @param uniqueCacheName must be a unique name for the cache
      * @param expire the minimum amount of time in milliseconds that the object should stay in cache
      */
     public SimpleCache(final String uniqueCacheName, final long expire) {
@@ -45,8 +52,9 @@ public class SimpleCache<I, T> {
     }
 
     /**
+     * <p>Constructor for SimpleCache.</p>
      *
-     * @param uniqueCacheName
+     * @param uniqueCacheName  must be a unique name for the cache
      * @param expire the minimum amount of time in milliseconds that the object should stay in cache
      * @param callback provides messages when an object has been removed from cache
      */
@@ -55,7 +63,9 @@ public class SimpleCache<I, T> {
     }
 
     /**
-     * @param uniqueCacheName
+     * <p>Constructor for SimpleCache.</p>
+     *
+     * @param uniqueCacheName  must be a unique name for the cache
      * @param expire the minimum amount of time in milliseconds that the object should stay in cache
      * @param period time in milliseconds between successive expire checks.
      */
@@ -65,9 +75,12 @@ public class SimpleCache<I, T> {
 
 
     /**
-     * @param uniqueCacheName
+     * <p>Constructor for SimpleCache.</p>
+     *
+     * @param uniqueCacheName  must be a unique name for the cache
      * @param expire the minimum amount of time in milliseconds that the object should stay in cache
      * @param period time in milliseconds between successive expire checks.
+     * @param callback a {@link org.elasolutions.utils.cache.SimpleCacheCallback} object.
      */
     public SimpleCache(final String uniqueCacheName, final long expire, SimpleCacheCallback<I, T> callback, final long period) {
         m_uniqueCacheName = uniqueCacheName;
@@ -83,7 +96,51 @@ public class SimpleCache<I, T> {
         m_cleanUpTimer.scheduleAtFixedRate(new EntryCleanupTask(this), m_delay, m_delay);
     }
 
+    public void close() {
+        if(m_cleanUpTimer!=null) {
+            m_cleanUpTimer.cancel();
+        }
+    }
 
+    /**
+     * Expires all elements in the cache, and remove all the elements.
+     * Will notify the listeners of element removed from the cache.
+     * void
+     */
+    public void expireAll() {
+        final Collection<Element<I, T>> elements = getCache().values();
+        for(final Element<I, T>element : elements ) {
+            m_callback.removedElement(element);
+            remove(element.getKey());
+        }
+    }
+
+
+    /**
+     * <p>get.</p>
+     *
+     * @param key a I object.
+     * @return a T object.
+     */
+    public T get(final I key) {
+        T item = null;
+        if (key != null) {
+            final Element<I, T> element = getCache().get(key);
+            if (element != null) {
+                item = element.getObjectValue();
+            }
+        }
+        return item;
+    }
+
+
+    /**
+     * <p>put.</p>
+     *
+     * @param id a I object.
+     * @param item a T object.
+     * @return a T object.
+     */
     public T put(final I id, final T item) {
         if( id==null || item==null) {
             return item;
@@ -98,23 +155,23 @@ public class SimpleCache<I, T> {
         return item;
     }
 
-    public T get(final I key) {
-        T item = null;
-        if (key != null) {
-            final Element<I, T> element = getCache().get(key);
-            if (element != null) {
-                item = element.getObjectValue();
-            }
-        }
-        return item;
-    }
-
+    /**
+     * <p>remove.</p>
+     *
+     * @param key a I object.
+     */
     public void remove(final I key) {
         Element<I, T>element = getCache().remove(key);
         element.setObjectValue(null);
         element = null;
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param id a I object.
+     * @param item a T object.
+     */
     public void update(final I id, final T item) {
         put(id, item);
     }
@@ -136,15 +193,27 @@ public class SimpleCache<I, T> {
         }
     }
 
+    /**
+     * <p>getCacheName.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getCacheName() {
         return m_uniqueCacheName;
     }
 
+    /**
+     * <p>getTimeout.</p>
+     *
+     * @return a long.
+     */
     public long getTimeout() {
         return m_expireTimeout;
     }
 
     /**
+     * <p>setTimeout.</p>
+     *
      * @param expire the minimum amount of time in milliseconds that the object should stay in cache
      * void
      */
@@ -152,6 +221,11 @@ public class SimpleCache<I, T> {
         m_expireTimeout = expire;
     }
 
+    /**
+     * <p>setExpireCacheCheck.</p>
+     *
+     * @param delayBetweenChecks a long.
+     */
     public void setExpireCacheCheck(final long delayBetweenChecks) {
         m_delay = delayBetweenChecks;
         m_cleanUpTimer.scheduleAtFixedRate(new EntryCleanupTask(this), m_delay, m_delay);
