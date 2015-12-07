@@ -4,8 +4,25 @@
 	<groupId>org.elasolutions</groupId>
 	<artifactId>elaUtils</artifactId>
 	<version>1.0.3</version>
+	<packaging>jar</packaging>
 	<name>General utils</name>
 	<description>General utils used by elasolutions.org</description>
+	
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <developers>
+        <developer>
+            <name>Malcolm G. Davis</name>
+            <email>malcolm@nuearth.com</email>
+        </developer>
+    </developers>
+    	
 	<properties>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.compiler.source>1.6</maven.compiler.source>
