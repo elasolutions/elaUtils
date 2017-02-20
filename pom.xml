@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.elasolutions</groupId>
 	<artifactId>elaUtils</artifactId>
-	<version>1.0.6</version>
+	<version>1.0.8</version>
 	<packaging>jar</packaging>
 	<name>General utils</name>
 	<description>General utils used by elasolutions.org</description>
@@ -30,8 +30,8 @@
 	</scm>
     	
 	<properties>
-		<maven.compiler.target>1.7</maven.compiler.target>
-		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
 	</properties>
 
 	<dependencies>
@@ -61,6 +61,12 @@
 		    <groupId>commons-validator</groupId>
 		    <artifactId>commons-validator</artifactId>
 		    <version>1.4.1</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.7</version>
 		</dependency>
 		
 	</dependencies>

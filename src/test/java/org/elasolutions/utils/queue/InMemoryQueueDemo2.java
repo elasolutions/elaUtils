@@ -4,7 +4,7 @@ import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
-public class InMemoryQueueDemo {
+public class InMemoryQueueDemo2 {
 
     public static void main(String[] args) {
         System.out.println("Start: InMemoryQueueDemo ");
@@ -12,7 +12,7 @@ public class InMemoryQueueDemo {
 
         long start = System.currentTimeMillis();
 
-        InMemoryQueueDemo test = new InMemoryQueueDemo();
+        InMemoryQueueDemo2 test = new InMemoryQueueDemo2();
         test.run();
 
         System.out.println("---------------------------------------------");
@@ -22,11 +22,8 @@ public class InMemoryQueueDemo {
     }
 
     private void run() {
+        // see https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/BlockingQueue.html
         LinkedBlockingDeque <String> queue = new LinkedBlockingDeque<String>();
-
-        for(int i = 0; i < 100; i++) {
-            queue.add(""+i);
-        }
 
         Vector<WorkerThread>workerList = new Vector<WorkerThread>();
         for( int cnt=0; cnt<10; cnt++) {
@@ -35,6 +32,35 @@ public class InMemoryQueueDemo {
 
         for(WorkerThread worker : workerList) {
             worker.start();
+        }
+
+        for(int i = 0; i < 50; i++) {
+            queue.offer(""+i);
+        }
+
+        while(true) {
+            if( queue.isEmpty() ) {
+                break;
+            }
+            // try { Thread.sleep(1000); } catch (InterruptedException excep) { }
+        }
+
+
+        for(int i = 0; i < 50; i++) {
+            queue.offer(""+i);
+        }
+
+        while(true) {
+            if( queue.isEmpty() ) {
+                break;
+            }
+            //try { Thread.sleep(1000); } catch (InterruptedException excep) { }
+        }
+
+
+        // kill threads
+        for(WorkerThread worker : workerList) {
+            worker.end();
         }
 
         // Wait for all the workers to finish
@@ -56,14 +82,27 @@ public class InMemoryQueueDemo {
 
         @Override
         public void run() {
-            while( m_run && !m_queue.isEmpty() ) {
-                String data = m_queue.poll();
-                if (data == null) {
-                    break;
-                }
-                System.out.println("worker="+ m_workerId + ", data="+data);
+            while( m_run ) {
+                try {
+                    String data = m_queue.take();
+                    if ( !m_run ) {
+                        break;
+                    }
+                    System.out.println("worker="+ m_workerId + ", data="+data);
 
-                try { Thread.sleep(250); } catch (InterruptedException excep) { excep.printStackTrace(); }
+                    try { Thread.sleep(250); } catch (InterruptedException excep) { excep.printStackTrace(); }
+                } catch (InterruptedException excep1) {
+                    excep1.printStackTrace();
+                }
+            }
+        }
+
+        public void end() {
+            m_run = false;
+            try {
+                m_queue.put("");
+            } catch (InterruptedException excep) {
+                excep.printStackTrace();
             }
         }
 
